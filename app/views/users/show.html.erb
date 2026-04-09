@@ -4,4 +4,13 @@
 <h1><%= @user.username %></h1>
 <p>Email: <%= @user.email %></p>
 
-
+<h2>Posts</h2>
+<% if @posts.any? %>
+  <ul>
+    <% @posts.each do |post| %>
+      <li><%= post.content %> (<%= post.created_at.strftime("%b %d, %Y") %>)</li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No posts yet.</p>
+<% end %>
