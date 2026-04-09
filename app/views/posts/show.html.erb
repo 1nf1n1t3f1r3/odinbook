@@ -1,0 +1,22 @@
+<h1>Posts#show</h1>
+Find me in app/views/posts/show.html.erb</p>
+
+<h1>Post</h1>
+
+<div style="border: 1px solid #ccc; padding: 15px;">
+  <strong>
+    <%= link_to @post.user.username, user_path(@post.user) %>
+  </strong>
+
+  <p><%= @post.content %></p>
+
+  <small>
+    Posted <%= time_ago_in_words(@post.created_at) %> ago
+  </small>
+</div>
+
+<% if @post.user == current_user %>
+  <%= button_to "Delete", post_path(@post), method: :delete %>
+<% end %>
+
+<%= link_to "Back to feed", root_path %>

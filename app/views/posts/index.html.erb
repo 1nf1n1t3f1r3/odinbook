@@ -1,0 +1,40 @@
+<h1>Posts#index</h1>
+<p>Find me in app/views/posts/index.html.erb</p>
+
+<h1>Create a Post</h1>
+
+<%= form_with model: Post.new, url: posts_path do |f| %>
+  <div>
+    <%= f.text_area :content, placeholder: "What's on your mind?" %>
+  </div>
+
+  <div>
+    <%= f.submit "Post" %>
+  </div>
+<% end %>
+
+<h1>Feed</h1>
+
+<% @posts.each do |post| %>
+  <div style="border: 1px solid #ccc; padding: 10px; margin-bottom: 10px;">
+    
+    <strong>
+      <%= link_to post.user.username, user_path(post.user) %>
+    </strong>
+    
+
+	<p><%= link_to "View Full Post", post_path(post) %></p>
+
+
+    <p><%= post.content %></p>
+    
+    <small>
+      Posted <%= time_ago_in_words(post.created_at) %> ago
+    </small>
+
+	<% if post.user == current_user %>
+		<%= button_to "Delete", post_path(post), method: :delete %>
+	<% end %>
+
+  </div>
+<% end %>
