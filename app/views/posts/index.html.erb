@@ -3,9 +3,12 @@
 
 <div class="container-main">
   <div class="layout-3col">
-    <!-- Left Sidebar -->
+    <!-- LEFT SIDEBAR -->
     <aside>
-      <!-- You can add navigation, suggestions, etc. later -->
+      <div class="card">
+        <h2 class="font-semibold mb-2">Navigation</h2>
+        <p class="text-sm opacity-70">Links coming later</p>
+      </div>
     </aside>
 
 <main>
@@ -28,7 +31,7 @@
       <div class="flex justify-between items-center mb-2">
         <strong>
           <%= link_to post.user.username, user_path(post.user),
-                class: "text-blue-900 font-semibold hover:text-accent-yellow" %>
+                class: "text-primary-blue-dark font-semibold hover:text-accent-yellow" %>
         </strong>
         <small class="text-gray-600">
           <%= time_ago_in_words(post.created_at) %> ago
@@ -52,10 +55,14 @@
 	
 </main>
 
-    <!-- Right Sidebar -->
+    <!-- RIGHT SIDEBAR -->
     <aside>
-      <!-- Future: trending, who to follow, etc. -->
+      <div class="card">
+        <h2 class="font-semibold mb-2">Suggestions</h2>
+        <p class="text-sm opacity-70">Future: who to follow</p>
+      </div>
     </aside>
+
 	  </div>
 </div>
 

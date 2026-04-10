@@ -20,6 +20,7 @@
     }
   }
 
+  /* Components */
   .btn {
     border-radius: 9999px;
     padding-inline: 0.75rem;
@@ -110,6 +111,7 @@
   }
 }
 
+/* Color Palette */
 @theme {
   --color-primary-blue-dark: #1d4ed8;
   --color-secondary-blue-light: #a6cced;

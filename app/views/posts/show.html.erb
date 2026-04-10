@@ -1,22 +1,69 @@
-<h1>Posts#show</h1>
-Find me in app/views/posts/show.html.erb</p>
+<div class="container-main">
 
-<h1>Post</h1>
+  <div class="layout-3col">
 
-<div style="border: 1px solid #ccc; padding: 15px;">
-  <strong>
-    <%= link_to @post.user.username, user_path(@post.user) %>
-  </strong>
+    <!-- LEFT SIDEBAR -->
+    <aside>
+      <div class="card">
+        <h2 class="font-semibold mb-2">Navigation</h2>
+        <p class="text-sm opacity-70">Links coming later</p>
+      </div>
+    </aside>
 
-  <p><%= @post.content %></p>
+    <!-- MAIN CONTENT -->
+    <main class="space-y-6">
 
-  <small>
-    Posted <%= time_ago_in_words(@post.created_at) %> ago
-  </small>
+    <h1 class="text-2xl font-bold text-primary-blue-dark mb-2">Post</h1>
+
+      <!-- POST CARD -->
+      <div class="card card-hover">
+
+        <div class="mb-4">
+          <strong>
+            <%= link_to @post.user.username,
+                        user_path(@post.user),
+                        class: "text-primary-blue-dark hover:text-accent-yellow font-semibold" %>
+          </strong>
+        </div>
+
+        <p class="mb-4 text-base">
+          <%= @post.content %>
+        </p>
+
+        <small class="block opacity-60 mb-4">
+          Posted <%= time_ago_in_words(@post.created_at) %> ago
+        </small>
+
+        <!-- ACTIONS -->
+        <div class="flex gap-2">
+
+          <%= link_to "Back to feed",
+                      root_path,
+                      class: "btn btn-primary" %>
+
+          <% if @post.user == current_user %>
+            <%= button_to "Delete Post",
+                          post_path(@post),
+                          method: :delete,
+                          class: "btn btn-danger" %>
+          <% end %>
+
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside>
+      <div class="card">
+        <h2 class="font-semibold mb-2">Post Info</h2>
+        <p class="text-sm opacity-70">
+          Future: likes, comments, stats
+        </p>
+      </div>
+    </aside>
+
+  </div>
+
 </div>
-
-<% if @post.user == current_user %>
-  <%= button_to "Delete Post", post_path(@post), method: :delete %>
-<% end %>
-
-<%= link_to "Back to feed", root_path %>
