@@ -23,16 +23,18 @@
     <%= javascript_importmap_tags %>
   </head>
 
-	<body>
-		<%= render "layouts/header" %>
+	<body class="min-h-screen flex flex-col">
+	<%= render "layouts/header" %>
 
-		<p class="notice"><%= notice %></p>
-		<p class="alert"><%= alert %></p>
+	<p class="notice"><%= notice %></p>
+	<p class="alert"><%= alert %></p>
 
-		<main class="mt-6">
-			<%= yield %>
-		</main>
+	<main class="flex-1 mt-6">
+		<%= yield %>
+	</main>
 
-
+	<div class="mt-6">
+		<%= render "layouts/footer" %>
+	</div>
 	</body>
 </html>
