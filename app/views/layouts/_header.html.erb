@@ -1,12 +1,12 @@
-<header class="bg-primary text-white shadow">
+<header class="bg-primary-blue-dark text-white shadow">
   <nav class="max-w-4xl mx-auto flex justify-between items-center p-4">
     
     <!-- Left: Logo + links -->
     <div class="flex gap-6 font-semibold text-lg">
-      <%= link_to "Odinbook", root_path, class: "hover:text-yellow-400" %>
-      <%= link_to "Users", users_path, class: "hover:text-yellow-400" %>
+      <%= link_to "Odinbook", root_path, class: "hover:text-accent-yellow" %>
+      <%= link_to "Users", users_path, class: "hover:text-accent-yellow" %>
       <% if user_signed_in? %>
-        <%= link_to "Profile", user_path(current_user), class: "hover:text-yellow-400" %>
+        <%= link_to "Profile", user_path(current_user), class: "hover:text-accent-yellow" %>
       <% end %>
     </div>
 
@@ -17,10 +17,10 @@
         <%= link_to "Logout",
             destroy_user_session_path,
             data: { turbo_method: :delete },
-            class: "btn-primary"%>
+            class: "btn btn-primary"%>
       <% else %>
-        <%= link_to "Login", new_user_session_path, class: "hover:text-yellow-400" %>
-        <%= link_to "Sign Up", new_user_registration_path, class: "hover:text-yellow-400" %>
+        <%= link_to "Login", new_user_session_path, class: "hover:text-accent-yellow" %>
+        <%= link_to "Sign Up", new_user_registration_path, class: "hover:text-accent-yellow" %>
       <% end %>
     </div>
 
