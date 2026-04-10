@@ -50,7 +50,37 @@
 
         </div>
 
+		
+
       </div>
+
+	<h1 class="mt-6 font-bold">Comments</h2>
+
+	<% @post.comments.each do |comment| %>
+	<div class="border-b py-2">
+		<strong><%= comment.user.username %></strong>
+		<p><%= comment.content %></p>
+
+		<% if comment.user == current_user %>
+		<%= button_to "Delete", post_comment_path(@post, comment), method: :delete %>
+		<% end %>
+	</div>
+	<% end %>
+
+	<h1 class="mt-4">Add a comment</h3>
+
+	<%= form_with(model: [@post, Comment.new], local: true) do |form| %>
+	<div>
+		<%= form.text_area :content, rows: 3 %>
+	</div>
+
+	<div>
+		<%= form.submit "Post Comment" %>
+	</div>
+	<% end %>
+
+
+
 
     </main>
 
