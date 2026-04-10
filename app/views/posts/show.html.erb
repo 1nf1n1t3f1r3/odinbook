@@ -1,5 +1,4 @@
 <div class="container-main">
-
   <div class="layout-3col">
 
     <!-- LEFT SIDEBAR -->
@@ -13,11 +12,13 @@
     <!-- MAIN CONTENT -->
     <main class="space-y-6">
 
-    <h1 class="text-2xl font-bold text-primary-blue-dark mb-2">Post</h1>
+      <!-- POST TITLE -->
+      <h1 class="text-2xl font-bold text-primary-blue-dark mb-2">
+        Post
+      </h1>
 
       <!-- POST CARD -->
       <div class="card card-hover">
-
         <div class="mb-4">
           <strong>
             <%= link_to @post.user.username,
@@ -36,7 +37,6 @@
 
         <!-- ACTIONS -->
         <div class="flex gap-2">
-
           <%= link_to "Back to feed",
                       root_path,
                       class: "btn btn-primary" %>
@@ -47,40 +47,84 @@
                           method: :delete,
                           class: "btn btn-danger" %>
           <% end %>
-
         </div>
-
-		
-
       </div>
 
-	<h1 class="mt-6 font-bold">Comments</h2>
+      <!-- COMMENTS TITLE -->
+      <h1 class="text-2xl font-bold text-primary-blue-dark mb-2">
+        Comments
+      </h1>
 
-	<% @post.comments.each do |comment| %>
-	<div class="border-b py-2">
-		<strong><%= comment.user.username %></strong>
-		<p><%= comment.content %></p>
+      <!-- COMMENTS LIST -->
+      <% @post.comments.each do |comment| %>
+        <div class="card card-hover mb-4">
 
-		<% if comment.user == current_user %>
-		<%= button_to "Delete", post_comment_path(@post, comment), method: :delete %>
-		<% end %>
-	</div>
-	<% end %>
+          <!-- Username -->
+		<div class="mb-1 font-semibold">
+		<%= link_to comment.user.username,
+					user_path(comment.user),
+					class: "text-primary-blue-dark hover:text-accent-yellow" %>
+		</div>
 
-	<h1 class="mt-4">Add a comment</h3>
+          <!-- Content + delete -->
+		<div class="flex flex-col gap-2">
+            <div class="flex-1 text-left min-w-0">
+              <%= simple_format(comment.content) %>
+            </div>
 
-	<%= form_with(model: [@post, Comment.new], local: true) do |form| %>
-	<div>
-		<%= form.text_area :content, rows: 3 %>
-	</div>
-
-	<div>
-		<%= form.submit "Post Comment" %>
-	</div>
-	<% end %>
-
+			<div class="flex gap-3 mt-3 text-sm opacity-70">
 
 
+			<button class="btn btn-secondary" >
+				Reply
+			</button>
+
+			<button class="btn btn-secondary" >
+				Like
+			</button>
+
+			<button class="btn btn-secondary" >
+				Share
+			</button>
+
+			<% if comment.user == current_user %>
+            <%= button_to "Delete",
+                            post_comment_path(@post, comment),
+                            method: :delete,
+                            class: "btn btn-danger" %>
+            <% end %>
+			</div>
+
+
+          </div>
+
+        </div>
+      <% end %>
+
+      <!-- CREATE COMMENT -->
+      <div class="mb-6">
+        <h1 class="text-2xl font-bold text-primary-blue-dark mb-2">
+          Create a Comment
+        </h1>
+
+        <%= form_with(model: [@post, Comment.new], local: true) do |f| %>
+          <%= f.text_area :content,
+                          placeholder: "What do you want to Comment?",
+						  rows: 4,
+                          class: "input",
+						  data: { controller: "autosize" } %>
+
+          <%= f.submit "Comment",
+                       class: "btn btn-primary self-end" %>
+        <% end %>
+      </div>
+
+      <!-- BACK LINK -->
+      <div>
+        <%= link_to "Back to feed",
+                    root_path,
+                    class: "btn btn-primary self-end" %>
+      </div>
 
     </main>
 
@@ -95,5 +139,4 @@
     </aside>
 
   </div>
-
 </div>
