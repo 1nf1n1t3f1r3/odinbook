@@ -37,9 +37,21 @@
 
         <!-- ACTIONS -->
         <div class="flex gap-2">
-          <%= link_to "Back to feed",
-                      root_path,
-                      class: "btn btn-primary" %>
+		<% if @post.liked_by?(current_user) %>
+			<%= button_to "💔 Unlike",
+				post_like_path(@post),
+				method: :delete,
+				class: "text-sm" %>
+		<% else %>
+			<%= button_to "❤️ Like",
+				post_like_path(@post),
+				method: :post,
+				class: "text-sm" %>
+		<% end %>
+
+		<span class="text-sm opacity-70">
+			<%= @post.likes.count %> likes
+		</span>
 
           <% if @post.user == current_user %>
             <%= button_to "Delete Post",
