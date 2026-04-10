@@ -1,22 +1,29 @@
-<header>
-  <nav>
-    <div>
-      <%= link_to "Odinbook", root_path %> |
-      <%= link_to "Users", users_path %> |
+<header class="bg-primary text-white shadow">
+  <nav class="max-w-4xl mx-auto flex justify-between items-center p-4">
+    
+    <!-- Left: Logo + links -->
+    <div class="flex gap-6 font-semibold text-lg">
+      <%= link_to "Odinbook", root_path, class: "hover:text-yellow-400" %>
+      <%= link_to "Users", users_path, class: "hover:text-yellow-400" %>
       <% if user_signed_in? %>
-        <%= link_to "Profile", user_path(current_user) %>
+        <%= link_to "Profile", user_path(current_user), class: "hover:text-yellow-400" %>
       <% end %>
     </div>
 
-    <div>
+    <!-- Right: Auth -->
+    <div class="flex items-center gap-4 text-sm">
       <% if user_signed_in? %>
         <span>Logged in as <%= current_user.username %></span>
-<%= link_to "Logout", destroy_user_session_path, data: { turbo_method: :delete } %>
+        <%= link_to "Logout",
+            destroy_user_session_path,
+            data: { turbo_method: :delete },
+            class: "btn-primary"%>
       <% else %>
-        <%= link_to "Login", new_user_session_path %> |
-        <%= link_to "Sign Up", new_user_registration_path %>
+        <%= link_to "Login", new_user_session_path, class: "hover:text-yellow-400" %>
+        <%= link_to "Sign Up", new_user_registration_path, class: "hover:text-yellow-400" %>
       <% end %>
     </div>
+
   </nav>
 </header>
 <hr>
