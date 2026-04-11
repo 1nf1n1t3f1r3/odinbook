@@ -13,7 +13,7 @@
 # 🔐 PERSISTENT USERS
 # -------------------------
 main_email = "johne1234@gmail.com"
-test_email = "testuser@gmail.com"
+test_email = "asdfasdf@gmail.com"
 
 persistent_emails = [ main_email, test_email ]
 
