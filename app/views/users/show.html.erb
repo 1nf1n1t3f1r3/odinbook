@@ -28,6 +28,23 @@
           <span class="font-semibold">Email:</span>
           <%= @user.email %>
         </p>
+
+		<p><%= @user.followers.count %> followers</p>
+		<p><%= @user.following.count %> following</p>
+
+		<% unless current_user == @user %>
+			<% if current_user.following?(@user) %>
+				<%= button_to "Unfollow",
+					user_follow_path(@user),
+					method: :delete,
+					class: "text-sm" %>
+			<% else %>
+				<%= button_to "Follow",
+					user_follow_path(@user),
+					method: :post,
+					class: "text-sm" %>
+			<% end %>
+		<% end %>
       </div>
 
       <!-- POSTS HEADER -->
