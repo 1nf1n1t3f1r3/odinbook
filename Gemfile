@@ -52,6 +52,10 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
+
+  # Guard
+  gem "guard"
+  gem "guard-minitest"
 end
 
 group :development do
