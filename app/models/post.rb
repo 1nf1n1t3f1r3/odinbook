@@ -10,4 +10,9 @@ class Post < ApplicationRecord
   def liked_by?(user)
     likes.exists?(user: user)
   end
+
+  def self.feed_for(user)
+    where(user_id: user.following_ids + [ user.id ])
+      .order(created_at: :desc)
+  end
 end
