@@ -1,19 +1,73 @@
-<h1>Edit Profile</h1>
+<div class="container-main">
 
-<%= form_with model: @user, url: profile_path, method: :patch do |f| %>
+  <div class="layout-3col">
 
-  <div>
-    <%= f.label :username %><br>
-    <%= f.text_field :username %>
+    <!-- LEFT SIDEBAR -->
+    <aside>
+      <div class="card">
+        <h2 class="font-semibold mb-2">Navigation</h2>
+        <p class="text-sm opacity-70">Links coming later</p>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="space-y-6">
+
+      <div class="card card-hover">
+
+        <h1 class="text-2xl font-bold text-primary-blue-dark mb-4">
+          Edit Profile
+        </h1>
+
+        <%= form_with model: @user, url: profile_path, method: :patch, class: "flex flex-col gap-3" do |f| %>
+
+			<% if @user.avatar.attached? %>
+			<div class="mb-2">
+				<p class="text-sm font-semibold">Avatar</p>
+				<%= image_tag @user.avatar, class: "w-16 h-16 rounded-full object-cover" %>
+			</div>
+			<% end %>
+
+          <!-- USERNAME -->
+          <%= f.label :username, class: "font-semibold" %>
+          <%= f.text_field :username,
+                class: "input",
+                placeholder: "Your username" %>
+
+          <!-- AVATAR -->
+          <%= f.label :avatar, class: "font-semibold" %>
+          <%= f.file_field :avatar, class: "input" %>
+
+          <!-- SUBMIT -->
+          <%= f.submit "Update Profile",
+                class: "btn btn-primary self-start mt-2" %>
+
+        <% end %>
+
+      </div>
+
+      <div class="card card-hover">
+
+		<p class="text-sm opacity-70">
+			Want to change your email or password?
+		</p>
+
+		<%= link_to "Account settings",
+				edit_user_registration_path,
+				class: "btn btn-primary self-start mt-2" %>
+
+	  </div>
+
+    </main>
+
+    <!-- RIGHT SIDEBAR -->
+    <aside>
+      <div class="card">
+        <h2 class="font-semibold mb-2">Profile</h2>
+        <p class="text-sm opacity-70">You can update your details here</p>
+      </div>
+    </aside>
+
   </div>
 
-  <div>
-    <%= f.label :avatar %><br>
-    <%= f.file_field :avatar %>
-  </div>
-
-  <div>
-    <%= f.submit "Update Profile" %>
-  </div>
-
-<% end %>
+</div>

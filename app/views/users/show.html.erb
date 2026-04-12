@@ -19,6 +19,13 @@
           <%= @user.username %>
         </h1>
 
+		<% if @user.avatar.attached? %>
+		<div class="mb-2">
+			<p class="text-sm font-semibold">Avatar</p>
+			<%= image_tag @user.avatar, class: "w-16 h-16 rounded-full object-cover" %>
+		</div>
+		<% end %>
+
         <p class="text-sm opacity-80">
           <span class="font-semibold">Username:</span>
           <%= @user.username %>
@@ -46,6 +53,14 @@
 			<% end %>
 		<% end %>
       </div>
+
+		<% if current_user == @user %>
+		<div class="mt-4">
+			<%= link_to "Edit Profile",
+				profile_edit_path,
+                class: "btn btn-primary self-start mt-2" %>
+		</div>
+		<% end %>
 
       <!-- POSTS HEADER -->
 
