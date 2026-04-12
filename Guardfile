@@ -16,17 +16,20 @@
 # and, you'll have to watch "config/Guardfile" instead of "Guardfile"
 
 guard :minitest do
-  # app code changes → run full test suite
-  watch(%r{^app/(.+)\.rb$}) { "test" }
+  # Model → matching test
+  watch(%r{^app/models/(.+)\.rb$}) { |m| "test/models/#{m[1]}_test.rb" }
 
-  # test files → run matching test
-  watch(%r{^test/.+_test\.rb$})
+  # Controller → integration tests
+  watch(%r{^app/controllers/(.+)_controller\.rb$}) { "test/integration" }
 
-  # test helper → run all tests
+  # Integration tests
+  watch(%r{^test/integration/.+_test\.rb$})
+
+  # Model tests
+  watch(%r{^test/models/.+_test\.rb$})
+
+  # Test helper → run everything
   watch("test/test_helper.rb") { "test" }
-
-  # lib changes → run all tests (safe default)
-  watch(%r{^lib/(.+)\.rb$}) { "test" }
 
 
   # # with Minitest::Unit

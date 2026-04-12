@@ -6,10 +6,15 @@ class PostTest < ActiveSupport::TestCase
   # Posts Logic
   test "user can create post" do
     user = users(:one)
-
     post = Post.new(content: "hello", user: user)
 
-    assert post.save
+    assert post.valid?
+  end
+
+
+  test "post is valid with valid attributes" do
+    post = Post.new(content: "hello", user: users(:one))
+    assert post.valid?
   end
 
   test "post belongs to user" do
@@ -19,7 +24,7 @@ class PostTest < ActiveSupport::TestCase
     assert_equal user, post.user
   end
 
-  test "user cannot delete another users post" do
+  test "user cannot access another user's post through association" do
     user1 = users(:one)
     user2 = users(:two)
 

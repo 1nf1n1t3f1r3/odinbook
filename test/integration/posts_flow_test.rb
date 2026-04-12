@@ -9,6 +9,13 @@ class PostsFlowTest < ActionDispatch::IntegrationTest
     sign_in @user
   end
 
+
+  test "should get index" do
+    get posts_index_url
+    assert_response :success
+  end
+
+
   test "logged in user can see posts" do
     get posts_url
     assert_response :success
@@ -17,6 +24,16 @@ class PostsFlowTest < ActionDispatch::IntegrationTest
   test "user can create a post" do
     assert_difference("Post.count", 1) do
       post posts_url, params: { post: { content: "Hello from test" } }
+    end
+
+    assert_response :redirect
+  end
+
+  test "user cannot create post when not logged in" do
+    sign_out @user
+
+    assert_no_difference("Post.count") do
+      post posts_url, params: { post: { content: "Hack attempt" } }
     end
 
     assert_response :redirect
@@ -39,5 +56,7 @@ class PostsFlowTest < ActionDispatch::IntegrationTest
     assert_no_difference("Post.count") do
       delete post_url(post_record)
     end
+
+    assert_response :not_found
   end
 end
