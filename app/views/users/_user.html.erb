@@ -1,0 +1,36 @@
+<li class="card card-hover flex items-center justify-between">
+
+  <div class="flex items-center gap-3">
+    
+    <%# Avatar %>
+    <% if user.avatar.attached? %>
+      <%= image_tag user.avatar,
+        class: "w-12 h-12 rounded-full object-cover" %>
+    <% end %>
+
+    <%# User info %>
+    <div>
+      <%= link_to user.username,
+        user_path(user),
+        class: "text-primary-blue-dark font-semibold hover:text-accent-yellow" %>
+
+      <p class="text-xs text-gray-500">
+        @<%= user.username %>
+      </p>
+    </div>
+
+  </div>
+
+    <%# Follow button %>
+	<% show_follow_button = local_assigns.fetch(:show_follow_button, true) %>
+	<% disable_follow_button = local_assigns.fetch(:disable_follow_button, false) %>
+
+	<% if show_follow_button %>
+	<div>
+		<%= render "follows/follow_button",
+			user: user,
+			disabled: disable_follow_button %>
+	</div>
+	<% end %>
+
+</li>

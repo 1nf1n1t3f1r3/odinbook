@@ -18,13 +18,7 @@
 
       <ul class="space-y-3">
         <% @users.each do |user| %>
-          <li class="card card-hover flex items-center justify-between">
-
-            <%= link_to user.username,
-                        user_path(user),
-                        class: "text-primary-blue-dark font-semibold hover:text-accent-yellow transition-colors" %>
-
-          </li>
+		  <%= render user %>
         <% end %>
       </ul>
     </main>

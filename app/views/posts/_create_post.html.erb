@@ -1,0 +1,8 @@
+  <!-- Create Post -->
+  <div class="mb-6">
+    <%= form_with model: Post.new, url: posts_path, class: "flex flex-col gap-3" do |f| %>
+      <%= f.text_area :content, placeholder: "What's on your mind?",
+            class: "input"%>
+      <%= f.submit "Post", class: "btn btn-primary self-end" %>
+    <% end %>
+  </div>

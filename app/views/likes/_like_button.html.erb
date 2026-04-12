@@ -1,0 +1,18 @@
+<div class="flex items-center gap-2">
+  <% if post.liked_by?(current_user) %>
+    <%= button_to "Unlike 💔",
+      post_like_path(post, current_user.likes.find_by(post: post)),
+      method: :delete,
+      class: "text-sm" %>
+  <% else %>
+    <%= button_to "Like 🤍",
+      post_like_path(post),
+      method: :post,
+      class: "text-sm" %>
+  <% end %>
+
+  <span class="text-sm text-gray-600">
+    <%= post.likes.count %> likes
+  </span>
+</div>
+ 

@@ -65,6 +65,14 @@
     }
   }
 
+  .card-white {
+    background-color: white;
+
+    border-radius: 1rem;
+    box-shadow: var(--shadow-md);
+    padding: 1rem;
+  }
+
   .card {
     background-color: var(--color-secondary-blue-light);
     border-radius: 1rem;

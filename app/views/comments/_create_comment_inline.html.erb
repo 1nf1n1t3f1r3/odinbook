@@ -1,0 +1,13 @@
+<%# app/views/comments/_create_comment_inline %>
+
+<div class="mt-3">
+<%= form_with(model: [post, Comment.new], local: true) do |f| %>
+	<div class="flex gap-2">
+	<%= f.text_field :content,
+		placeholder: "Write a comment...",
+		class: "input text-sm" %>
+
+	<%= f.submit "Comment", class: "btn btn-primary text-sm" %>
+	</div>
+<% end %>
+</div>
