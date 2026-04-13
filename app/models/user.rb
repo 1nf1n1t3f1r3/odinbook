@@ -4,10 +4,14 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  after_commit :send_welcome_email, on: :create
+
   has_one_attached :avatar
 
   validates :username, presence: true, uniqueness: true
     validates :email, presence: true, uniqueness: true
+
+
 
     has_many :posts, dependent: :destroy
     has_many :comments, dependent: :destroy
@@ -37,5 +41,11 @@ class User < ApplicationRecord
   def following?(user)
     return false unless user
     following.exists?(user.id)
+  end
+
+  private
+
+  def send_welcome_email
+    UserMailer.welcome_email(self).deliver_later
   end
 end
