@@ -7,6 +7,8 @@ class Post < ApplicationRecord
     has_many :likes, dependent: :destroy
     has_many :likers, through: :likes, source: :user
 
+  has_one_attached :image
+
   def liked_by?(user)
     likes.exists?(user: user)
   end

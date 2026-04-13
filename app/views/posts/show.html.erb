@@ -19,17 +19,28 @@
 
       <!-- POST CARD -->
       <div class="card card-hover">
-        <div class="mb-4">
-          <strong>
-            <%= link_to @post.user.username,
-                        user_path(@post.user),
-                        class: "text-primary-blue-dark hover:text-accent-yellow font-semibold" %>
-          </strong>
+        <div class="flex items-center gap-3">
+			<%# Avatar %>
+			<% if @post.user.avatar.attached? %>
+			<%= image_tag @post.user.avatar,
+				class: "w-12 h-12 rounded-full object-cover" %>
+			<% end %>
+
+            <strong>
+				<%= link_to @post.user.username,
+							user_path(@post.user),
+							class: "text-primary-blue-dark hover:text-accent-yellow font-semibold" %>
+            </strong>
         </div>
 
         <p class="mb-4 text-base">
           <%= @post.content %>
         </p>
+
+		<%# Image %>
+		<% if @post.image.attached? %>
+ 			<%= image_tag @post.image, class: "rounded-lg mt-2 max-h-192 object-cover mb-4" %>
+		<% end %>
 
         <small class="block opacity-60 mb-4">
           Posted <%= time_ago_in_words(@post.created_at) %> ago

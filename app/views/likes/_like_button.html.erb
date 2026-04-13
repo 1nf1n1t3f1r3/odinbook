@@ -1,14 +1,14 @@
-<div class="flex items-center gap-2">
+<div class="flex items-center gap-2 mb-2">
   <% if post.liked_by?(current_user) %>
     <%= button_to "Unlike 💔",
       post_like_path(post, current_user.likes.find_by(post: post)),
       method: :delete,
-      class: "text-sm" %>
+      class: "text-primary-blue-dark font-bold hover:text-accent-yellow" %>
   <% else %>
     <%= button_to "Like 🤍",
       post_like_path(post),
       method: :post,
-      class: "text-sm" %>
+      class: "text-primary-blue-dark font-bold hover:text-accent-yellow" %>
   <% end %>
 
   <span class="text-sm text-gray-600">
