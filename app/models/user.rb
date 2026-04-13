@@ -43,9 +43,9 @@ class User < ApplicationRecord
     following.exists?(user.id)
   end
 
-  # private
+  private
 
-  # def send_welcome_email
-  #   UserMailer.welcome_email(self).deliver_later
-  # end
+  def send_welcome_email
+    # UserMailer.welcome_email(self).deliver_later
+  end
 end
