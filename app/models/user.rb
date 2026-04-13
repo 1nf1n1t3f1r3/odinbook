@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  after_commit :send_welcome_email, on: :create
+  # after_commit :send_welcome_email, on: :create
 
   has_one_attached :avatar
 
@@ -43,9 +43,9 @@ class User < ApplicationRecord
     following.exists?(user.id)
   end
 
-  private
+  # private
 
-  def send_welcome_email
-    UserMailer.welcome_email(self).deliver_later
-  end
+  # def send_welcome_email
+  #   UserMailer.welcome_email(self).deliver_later
+  # end
 end
