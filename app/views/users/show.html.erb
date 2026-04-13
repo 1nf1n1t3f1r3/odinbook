@@ -97,13 +97,13 @@
 	<aside>
 	<div class="card-white">
 		<h2 class="font-semibold mb-2">
-			Your Card
+		User Profile Card
 		</h2>
 
 		<ul>
 		<%= render "users/user",
-			user: current_user,
-			show_follow_button: false %>
+				user: (@user || current_user),
+				show_follow_button: false %>
 		</ul>
 	</div>
 	</aside>
