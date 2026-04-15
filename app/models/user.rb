@@ -4,7 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  # after_commit :send_welcome_email, on: :create
+  after_commit :send_welcome_email, on: :create
 
   has_one_attached :avatar
 
@@ -46,6 +46,7 @@ class User < ApplicationRecord
   private
 
   def send_welcome_email
-    # UserMailer.welcome_email(self).deliver_later
+  Rails.logger.info "🔥 CALLBACK TRIGGERED: sending welcome email"
+  UserMailer.welcome_email(self)
   end
 end

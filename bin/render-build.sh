@@ -6,4 +6,5 @@ bundle install
 bin/rails assets:precompile
 bin/rails assets:clean
 
-bin/rails db:migrate
+#  Add this when there's no DB or a fresh DB
+# bin/rails db:migrate
