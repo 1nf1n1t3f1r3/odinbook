@@ -80,10 +80,14 @@
         <div class="space-y-3">
 
           <% @posts.each do |post| %>
-            <%= render @user.posts %>
-          <% end %>
-
+			<%= render post %>
+			<% end %>
         </div>
+
+
+
+
+
       <% else %>
         <div class="card">
           <p class="opacity-70">No posts yet.</p>
