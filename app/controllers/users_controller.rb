@@ -7,7 +7,15 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @posts = @user.posts.order(created_at: :desc).limit(10)
+
+    @posts =
+      case params[:sort]
+      when "top"
+        @user.posts.with_hot_score.hot_ordered
+      else
+        @user.posts.order(created_at: :desc)
+      end
+      .limit(5)
   end
 
   def edit

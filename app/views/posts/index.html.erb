@@ -19,9 +19,20 @@
   <!-- Feed -->
   <h1 class="text-2xl font-bold text-primary-blue-dark mb-4">Feed</h1>
 
-<% @posts.each do |post| %>
-  <%= render post %>
-<% end %>
+	<%# Sort by Recent or Top %>
+	<div class="mb-4 flex gap-2 text-sm">
+	<%= link_to "Recent",
+		posts_path(sort: "recent"),
+		class: "px-3 py-1 rounded-full #{params[:sort] != 'top' ? 'bg-blue-500 text-white' : 'bg-gray-100'}" %>
+
+	<%= link_to "Top",
+		posts_path(sort: "top"),
+		class: "px-3 py-1 rounded-full #{params[:sort] == 'top' ? 'bg-blue-500 text-white' : 'bg-gray-100'}" %>
+	</div>
+
+	<% @posts.each do |post| %>
+	<%= render post %>
+	<% end %>
 	
 </main>
 

@@ -90,6 +90,16 @@
           Posts
         </h2>
 
+		<%# Sort by Recent or Top %>
+		<div class="mb-4 flex gap-2 text-sm">
+		<%= link_to "Recent",
+			user_path(@user, sort: "recent"),
+			class: "px-3 py-1 rounded-full #{params[:sort] != 'top' ? 'bg-blue-500 text-white' : 'bg-gray-100'}" %>
+
+		<%= link_to "Top",
+			user_path(@user, sort: "top"),
+			class: "px-3 py-1 rounded-full #{params[:sort] == 'top' ? 'bg-blue-500 text-white' : 'bg-gray-100'}" %>
+		</div>
 
       <!-- POSTS LIST -->
       <% if @posts.any? %>
