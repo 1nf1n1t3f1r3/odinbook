@@ -1,14 +1,17 @@
 class PostsController < ApplicationController
-def index
-  @posts =
-    case params[:sort]
-    when "top"
-      Post.feed_for(current_user).with_hot_score.hot_ordered
-    else
-      Post.feed_for(current_user).order(created_at: :desc)
-    end
-    .limit(25)
-end
+  def index
+    scope =
+      case params[:sort]
+      when "top"
+        Post.feed_for(current_user).with_hot_score.hot_ordered
+      when "oldest"
+        Post.feed_for(current_user).order(created_at: :asc)
+      else
+        Post.feed_for(current_user).order(created_at: :desc)
+      end
+
+    @pagy, @posts = pagy(:offset, scope, limit: 10)
+  end
 
   def show
       @post = Post.includes(comments: :user).find(params[:id])

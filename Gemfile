@@ -75,6 +75,7 @@ gem "tailwindcss-rails", "~> 4.4"
 
 gem "sendgrid-ruby"
 
-
 gem "cloudinary"
 gem "activestorage-cloudinary-service"
+
+gem "pagy"

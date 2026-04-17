@@ -121,6 +121,20 @@
   }
 }
 
+/* Pagy */
+
+.pagy-nav {
+  @apply flex gap-2 text-sm justify-center mt-6;
+}
+
+.pagy-nav a {
+  @apply px-3 py-1 rounded border border-gray-300 hover:bg-gray-100;
+}
+
+.pagy-nav .current {
+  @apply px-3 py-1 rounded bg-black text-white;
+}
+
 /* Color Palette */
 @theme {
   --color-primary-blue-dark: #1d4ed8;

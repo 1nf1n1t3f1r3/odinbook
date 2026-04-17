@@ -11,6 +11,9 @@ class ApplicationController < ActionController::Base
   # Add Usernames
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  # Pagy
+  include Pagy::Method
+
   protected
 
   def configure_permitted_parameters

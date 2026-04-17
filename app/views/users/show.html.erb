@@ -94,11 +94,15 @@
 		<div class="mb-4 flex gap-2 text-sm">
 		<%= link_to "Recent",
 			user_path(@user, sort: "recent"),
-			class: "px-3 py-1 rounded-full #{params[:sort] != 'top' ? 'bg-blue-500 text-white' : 'bg-gray-100'}" %>
+      class: "px-3 py-1 rounded-full #{params[:sort] != 'top' && params[:sort] != 'oldest' ? 'bg-blue-500 text-white' : 'bg-gray-100'}" %>
 
 		<%= link_to "Top",
 			user_path(@user, sort: "top"),
-			class: "px-3 py-1 rounded-full #{params[:sort] == 'top' ? 'bg-blue-500 text-white' : 'bg-gray-100'}" %>
+      class: "px-3 py-1 rounded-full #{params[:sort] == 'top' ? 'bg-blue-500 text-white' : 'bg-gray-100'}" %>
+
+		<%= link_to "Oldest",
+			user_path(@user, sort: "oldest"),
+      class: "px-3 py-1 rounded-full #{params[:sort] == 'oldest' ? 'bg-blue-500 text-white' : 'bg-gray-100'}" %>
 		</div>
 
       <!-- POSTS LIST -->
@@ -110,11 +114,18 @@
 			<% end %>
         </div>
 
+		<div class="pagy-nav">
+			<%== @pagy.series_nav %>
+		</div>
+
+
       <% else %>
         <div class="card">
           <p class="opacity-70">No posts yet.</p>
         </div>
 		
+
+
       <% end %>
 
     </main>

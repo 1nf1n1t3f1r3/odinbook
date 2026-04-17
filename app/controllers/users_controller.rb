@@ -2,20 +2,23 @@ class UsersController < ApplicationController
   # Users must be logged in (inherited from ApplicationController)
 
   def index
-    @users = User.all
+    @pagy, @users = pagy(:offset, User.order(created_at: :desc), limit: 25)
   end
 
   def show
     @user = User.find(params[:id])
 
-    @posts =
+    scope =
       case params[:sort]
       when "top"
         @user.posts.with_hot_score.hot_ordered
+      when "oldest"
+        @user.posts.order(created_at: :asc)
       else
         @user.posts.order(created_at: :desc)
       end
-      .limit(5)
+
+    @pagy, @posts = pagy(:offset, scope, limit: 5)
   end
 
   def edit
