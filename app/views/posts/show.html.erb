@@ -19,7 +19,7 @@
 
       <!-- POST CARD -->
       <div class="card card-hover">
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-3 mb-4">
 			<%# Avatar %>
 			<% if @post.user.avatar.attached? %>
 			<%= image_tag @post.user.avatar,
@@ -61,21 +61,19 @@
 
 	<%# COMMENTS %>
 	<h1 class="text-2xl font-bold text-primary-blue-dark mb-2">
-        Leave a Comment!
-    </h1>
+		Comments
+	</h1>
 	<%= render "comments/create_comment_inline", post: @post %>
 
 	<!-- COMMENTS TITLE -->
-	<h1 class="text-2xl font-bold text-primary-blue-dark mb-2">
-		Comments
-	</h1>
+
 
 	<!-- COMMENTS LIST -->
 	<% @post.comments.each do |comment| %>
 	<div class="card card-hover mb-4">
 
 		<!-- Username -->
-	<div class="mb-1 font-semibold">
+	<div class="mb-4 font-semibold">
 	<%= link_to comment.user.username,
 				user_path(comment.user),
 				class: "text-primary-blue-dark hover:text-accent-yellow" %>
@@ -102,14 +100,6 @@
 
 	</div>
 	<% end %>
-
-	<!-- BACK LINK -->
-	<div>
-	<%= link_to "Back to feed",
-				root_path,
-				class: "btn btn-primary self-end" %>
-	</div>
-
     </main>
 
     <!-- RIGHT SIDEBAR -->

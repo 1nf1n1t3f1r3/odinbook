@@ -46,7 +46,7 @@ class User < ApplicationRecord
   private
 
   def send_welcome_email
-  Rails.logger.info "🔥 CALLBACK TRIGGERED: sending welcome email"
-  UserMailer.welcome_email(self)
+    Rails.logger.info "🔥 CALLBACK TRIGGERED: sending welcome email"
+    UserMailer.welcome_email(self)
   end
 end
