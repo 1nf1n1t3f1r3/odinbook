@@ -21,13 +21,17 @@ class Post < ApplicationRecord
   scope :with_hot_score, -> {
     select("
       posts.*,
-      (likes_count + comments_count * 2 + 1) /
-      ((EXTRACT(EPOCH FROM (NOW() - created_at)) / 3600) + 12)
+      (posts.likes_count + posts.comments_count * 2 + 1) /
+      ((EXTRACT(EPOCH FROM (NOW() - posts.created_at)) / 3600) + 12)
       AS hot_score
     ")
   }
 
   scope :hot_ordered, -> {
-    order("hot_score DESC")
+    # We repeat the math in the order clause so Pagy's count/ordering doesn't lose track of it
+    order(Arel.sql("
+      (posts.likes_count + posts.comments_count * 2 + 1) /
+      ((EXTRACT(EPOCH FROM (NOW() - posts.created_at)) / 3600) + 12) DESC
+    "))
   }
 end
