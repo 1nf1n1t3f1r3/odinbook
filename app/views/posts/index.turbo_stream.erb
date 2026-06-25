@@ -1,0 +1,20 @@
+<%# app/views/posts/index.turbo_stream.erb %>
+<%# 1. Append the next 10 posts onto the bottom of the existing feed feed %>
+<%= turbo_stream.append "posts-feed-container" do %>
+  <% @posts.each do |post| %>
+    <%= render post %>
+  <% end %>
+<% end %>
+<%# 2. Replace the old "Load More" button with a fresh one pointing to the NEXT page %>
+<%= turbo_stream.replace "pagy_pagination_frame" do %>
+  <%= turbo_frame_tag "pagy_pagination_frame" do %>
+    <% if @pagy.next %>
+      <div class="pagy-nav my-6 text-center">
+        <%= link_to "Load More Posts", 
+                    posts_path(page: @pagy.next), 
+                    data: { turbo_stream: true }, 
+                    class: "btn btn-secondary inline-block px-4 py-2" %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

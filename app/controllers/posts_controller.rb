@@ -1,12 +1,15 @@
 class PostsController < ApplicationController
   def index
-    # Start with all public posts (includes user for fast loading/no N+1 queries)
-    base_posts = Post.includes(:user)
+    # Cleaned up double-set base_posts snippet
+    scope = Post.includes(:user).by_hotness_for(current_user)
 
-scope = Post.includes(:user).by_hotness_for(current_user)
+    # Pass the scope cleanly into your paginator
+    @pagy, @posts = pagy(scope, limit: 10) # Note: Removed :offset unless specifically required by your Pagy config
 
-      # Pass the scope cleanly into your paginator
-      @pagy, @posts = pagy(:offset, scope, limit: 10)
+    respond_to do |format|
+      format.html # Standard page load
+      format.turbo_stream # Infinite scroll / pagination click load
+    end
   end
 
   def show

@@ -15,15 +15,24 @@
       <%= render "posts/create_post" %>
       <!-- Feed -->
       <h1 class="text-2xl font-bold text-primary-blue-dark mb-4">Feed</h1>
-      <%# Sort by Recent or Top %>
-      <div class="mb-4 flex gap-2 text-sm">
+      <%# 1. We name this container so Turbo knows exactly where to append subsequent pages %>
+      <div id="posts-feed-container">
+        <% @posts.each do |post| %>
+          <%= render post %>
+        <% end %>
       </div>
-      <% @posts.each do |post| %>
-        <%= render post %>
+      <%# 2. We trap the pagination navigation inside a unique Turbo Frame %>
+      <%= turbo_frame_tag "pagy_pagination_frame" do %>
+        <% if @pagy.next %>
+          <div class="pagy-nav my-6 text-center">
+            <%# We add data-turbo-stream to force the link to fetch a stream rather than an HTML page %>
+            <%= link_to "Load More Posts", 
+                        posts_path(page: @pagy.next), 
+                        data: { turbo_stream: true }, 
+                        class: "btn btn-secondary inline-block px-4 py-2" %>
+          </div>
+        <% end %>
       <% end %>
-      <div class="pagy-nav">
-        <%== @pagy.series_nav %>
-      </div>
     </main>
     <!-- RIGHT SIDEBAR -->
     <aside>
