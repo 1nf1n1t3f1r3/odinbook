@@ -1,16 +1,22 @@
 class PostsController < ApplicationController
   def index
+    # Start with all public posts (includes user for fast loading/no N+1 queries)
+    base_posts = Post.includes(:user)
+
     scope =
       case params[:sort]
       when "top"
-        Post.feed_for(current_user).with_hot_score.hot_ordered
+        # This handles fetching everything, calculating the hot score,
+        # applying your friend multiplier, and sorting it!
+        base_posts.by_hotness_for(current_user)
       when "oldest"
-        Post.feed_for(current_user).order(created_at: :asc)
-      else
-        Post.feed_for(current_user).order(created_at: :desc)
+        base_posts.order(created_at: :asc)
+      else # "newest" / default
+        base_posts.order(created_at: :desc)
       end
 
-    @pagy, @posts = pagy(:offset, scope, limit: 10)
+      # Pass the scope cleanly into your paginator
+      @pagy, @posts = pagy(:offset, scope, limit: 10)
   end
 
   def show
