@@ -2,8 +2,14 @@ class UsersController < ApplicationController
   # Users must be logged in (inherited from ApplicationController)
 
   def index
-    @pagy, @users = pagy(:offset, User.order(created_at: :desc), limit: 25)
+    @pagy, @users = pagy(User.order(created_at: :desc), limit: 25)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream
+    end
   end
+
 
   def show
     @user = User.find(params[:id])

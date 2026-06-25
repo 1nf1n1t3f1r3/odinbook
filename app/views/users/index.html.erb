@@ -1,42 +1,41 @@
 <div class="container-main">
-
   <div class="layout-3col">
-
-    <!-- LEFT SIDEBAR -->
     <aside>
       <div class="card">
         <h2 class="font-semibold mb-2">Navigation</h2>
         <p class="text-sm opacity-70">Links coming later</p>
       </div>
     </aside>
-
-    <!-- MAIN CONTENT -->
     <main>
       <h1 class="text-2xl font-bold mb-6 text-primary-blue-dark">
         All Users
       </h1>
-
-      <ul class="space-y-3">
+      <%# Fixed Container ID & Plural variable typo %>
+      <div id="users-container" class="flex flex-col gap-2">
         <% @users.each do |user| %>
-		  <%= render user %>
+          <%= render user %>
         <% end %>
-      </ul>
-
-		<div class="pagy-nav">
-			<%== @pagy.series_nav %>
-		</div>
-
-
+      </div>
+      <%# Cleaned up structural HTML layout tags out of this block %>
+      <%= turbo_frame_tag "pagy_pagination_frame" do %>
+        <% if @pagy.next %>
+          <div data-controller="infinite-scroll" class="my-8 text-center py-4">
+            <%= link_to "Loading more users...", 
+                        users_path(page: @pagy.next), 
+                        data: { 
+                          turbo_stream: true,
+                          infinite_scroll_target: "link" 
+                        }, 
+                        class: "text-gray-500 text-sm tracking-wide animate-pulse" %>
+          </div>
+        <% end %>
+      <% end %>
     </main>
-
-    <!-- RIGHT SIDEBAR -->
     <aside>
       <div class="card">
         <h2 class="font-semibold mb-2">Suggestions</h2>
         <p class="text-sm opacity-70">Future: who to follow</p>
       </div>
     </aside>
-
   </div>
-
 </div>
