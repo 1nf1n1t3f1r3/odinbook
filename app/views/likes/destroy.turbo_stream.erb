@@ -1,0 +1,4 @@
+<%# app/views/likes/destroy.turbo_stream.erb %>
+<%= turbo_stream.replace "likes_for_#{dom_id(@post)}" do %>
+  <%= render partial: "likes/like_button", locals: { post: @post } %>
+<% end %>

@@ -4,12 +4,20 @@ class LikesController < ApplicationController
 
   def create
     @post.likes.create!(user: current_user)
-    redirect_back fallback_location: root_path
+
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to root_path }
+    end
   end
 
   def destroy
     @post.likes.find_by(user: current_user)&.destroy
-    redirect_back fallback_location: root_path
+
+respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to root_path }
+    end
   end
 
   private
