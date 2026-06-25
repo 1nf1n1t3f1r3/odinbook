@@ -73,14 +73,26 @@
       </h2>
       <!-- POSTS LIST -->
       <% if @posts.any? %>
-        <div class="space-y-3">
+        <% # 1. The container where new user posts will cascade %>
+        <div id="user-posts-container" class="space-y-4">
           <% @posts.each do |post| %>
             <%= render post %>
           <% end %>
         </div>
-        <div class="pagy-nav">
-          <%== @pagy.series_nav %>
-        </div>
+        <% # 2. The pagination observer target %>
+        <%= turbo_frame_tag "pagy_pagination_frame" do %>
+          <% if @pagy.next %>
+            <div data-controller="infinite-scroll" class="my-8 text-center py-4">
+              <%= link_to "Loading more posts...", 
+                          user_path(@user, page: @pagy.next), 
+                          data: { 
+                            turbo_stream: true,
+                            infinite_scroll_target: "link" 
+                          }, 
+                          class: "text-gray-500 text-sm tracking-wide animate-pulse" %>
+            </div>
+          <% end %>
+        <% end %>
       <% else %>
         <div class="card">
           <p class="opacity-70">No posts yet.</p>

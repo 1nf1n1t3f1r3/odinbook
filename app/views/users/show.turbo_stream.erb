@@ -1,0 +1,23 @@
+<% # app/views/users/show.turbo_stream.erb %>
+<% # 1. Append the next batch of this user's specific posts %>
+<%= turbo_stream.append "user-posts-container" do %>
+  <% @posts.each do |post| %>
+    <%= render post %>
+  <% end %>
+<% end %>
+<% # 2. Refresh the observer trigger loop for subsequent pages %>
+<%= turbo_stream.replace "pagy_pagination_frame" do %>
+  <%= turbo_frame_tag "pagy_pagination_frame" do %>
+    <% if @pagy.next %>
+      <div data-controller="infinite-scroll" class="my-8 text-center py-4">
+        <%= link_to "Loading more posts...", 
+                    user_path(@user, page: @pagy.next), 
+                    data: { 
+                      turbo_stream: true,
+                      infinite_scroll_target: "link" 
+                    }, 
+                    class: "text-gray-500 text-sm tracking-wide animate-pulse" %>
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

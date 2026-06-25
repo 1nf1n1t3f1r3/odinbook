@@ -11,20 +11,18 @@ class UsersController < ApplicationController
   end
 
 
-  def show
+def show
     @user = User.find(params[:id])
 
-    scope =
-      case params[:sort]
-      when "top"
-        @user.posts.with_hot_score.hot_ordered
-      when "oldest"
-        @user.posts.order(created_at: :asc)
-      else
-        @user.posts.order(created_at: :desc)
-      end
+    # Note: Using your clean global sorting fallback since we dropped the tabs!
+    scope = @user.posts.by_hotness_for(current_user)
 
-    @pagy, @posts = pagy(:offset, scope, limit: 5)
+    @pagy, @posts = pagy(scope, limit: 5)
+
+    respond_to do |format|
+      format.html
+      format.turbo_stream # Adds support for our scroll loader
+    end
   end
 
   def edit
