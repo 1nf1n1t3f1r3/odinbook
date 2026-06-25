@@ -1,19 +1,23 @@
 <%# app/views/posts/index.turbo_stream.erb %>
-<%# 1. Append the next 10 posts onto the bottom of the existing feed feed %>
+<%# 1. Append the new posts %>
 <%= turbo_stream.append "posts-feed-container" do %>
   <% @posts.each do |post| %>
     <%= render post %>
   <% end %>
 <% end %>
-<%# 2. Replace the old "Load More" button with a fresh one pointing to the NEXT page %>
+<%# 2. Replace the pagination frame with the NEXT page link %>
 <%= turbo_stream.replace "pagy_pagination_frame" do %>
   <%= turbo_frame_tag "pagy_pagination_frame" do %>
     <% if @pagy.next %>
-      <div class="pagy-nav my-6 text-center">
-        <%= link_to "Load More Posts", 
+      <%# CRITICAL: The data-controller must be present here so Stimulus wakes up on page 3, 4, etc. %>
+      <div data-controller="infinite-scroll" class="my-8 text-center py-4">
+        <%= link_to "Loading more posts...", 
                     posts_path(page: @pagy.next), 
-                    data: { turbo_stream: true }, 
-                    class: "btn btn-secondary inline-block px-4 py-2" %>
+                    data: { 
+                      turbo_stream: true,
+                      infinite_scroll_target: "link" 
+                    }, 
+                    class: "text-gray-500 text-sm tracking-wide animate-pulse" %>
       </div>
     <% end %>
   <% end %>

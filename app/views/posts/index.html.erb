@@ -21,15 +21,19 @@
           <%= render post %>
         <% end %>
       </div>
-      <%# 2. We trap the pagination navigation inside a unique Turbo Frame %>
+      <%# 2. We trap the pagination navigation inside a unique Turbo Frame with Stimulus and data-infinite-scroll-target %>
+      <%# We style it invisibly since the user won't need to manually click it %>
       <%= turbo_frame_tag "pagy_pagination_frame" do %>
         <% if @pagy.next %>
-          <div class="pagy-nav my-6 text-center">
-            <%# We add data-turbo-stream to force the link to fetch a stream rather than an HTML page %>
-            <%= link_to "Load More Posts", 
-                        posts_path(page: @pagy.next), 
-                        data: { turbo_stream: true }, 
-                        class: "btn btn-secondary inline-block px-4 py-2" %>
+          <%# 1. We connect the wrapper element to our Stimulus controller %>
+          <div data-controller="infinite-scroll" class="my-8 text-center py-4">
+            <%= link_to "Loading more posts...", 
+                  posts_path(page: @pagy.next), 
+                  data: { 
+                    turbo_stream: true,
+                    infinite_scroll_target: "link" 
+                  }, 
+                  class: "text-gray-500 text-sm tracking-wide animate-pulse" %>
           </div>
         <% end %>
       <% end %>
