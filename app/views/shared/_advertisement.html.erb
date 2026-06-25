@@ -1,0 +1,24 @@
+<%# app/views/shared/_advertisement.html.erb %>
+<% 
+  available_ads = ["gorrmoth", "nebril", "garritt"]
+  selected_ad = available_ads.sample
+%>
+<div class="w-[320px] mx-auto flex flex-col gap-4 shrink-0">
+  <%# Added w-80 (20rem / 320px) or w-96 (24rem / 384px) and overflow-hidden %>
+  <div class="card bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm w-full max-w-sm md:w-80 mx-auto overflow-hidden flex flex-col justify-between">
+    <div class="flex justify-between items-center mb-3">
+      <span class="text-xs font-bold text-gray-400 tracking-wider uppercase">Sponsored</span>
+      <span class="text-xs text-gray-400 hover:underline cursor-pointer">Hide Ad</span>
+    </div>
+    <div class="space-y-3 flex-1">
+      <%= render "shared/ads/#{selected_ad}" %>
+    </div>
+  </div>
+  <div class="card bg-gray-50 border border-gray-200 rounded-lg p-4 shadow-sm w-full max-w-sm md:w-80 mx-auto overflow-hidden flex flex-col justify-between">
+    Your Ad Here? 
+    <div class="text-xs font-bold text-gray-400 tracking-wider uppercase"></div>
+    <div class="text-xs font-bold text-gray-400 tracking-wider uppercase">  <a href="mailto:jdv97@outlook.com">
+        Send a Mail to Marketing!
+      </a></div>
+  </div>
+</div>
