@@ -33,17 +33,22 @@
           </div>
         <% end %>
       </div>
+      <%# TURBO %>
       <%= turbo_frame_tag "pagy_pagination_frame" do %>
         <% if @pagy.next %>
           <div data-controller="infinite-scroll" class="my-8 text-center py-4">
-            <%# CRITICAL UPDATE: Pass the current :query into the pagination link so infinite scrolling respects the search filter! %>
             <%= link_to "Loading more users...", 
-                        users_path(page: @pagy.next, query: @search_query), 
-                        data: { 
-                          turbo_stream: true,
-                          infinite_scroll_target: "link" 
-                        }, 
-                        class: "text-gray-500 text-sm tracking-wide animate-pulse" %>
+                  users_path(
+                    page: @pagy.next, 
+                    query: @search_query, 
+                    filter_by: params[:filter_by], 
+                    user_id: params[:user_id]
+                  ), 
+                  data: { 
+                    turbo_stream: true,
+                    infinite_scroll_target: "link" 
+                  }, 
+                  class: "text-gray-500 text-sm tracking-wide animate-pulse" %>
           </div>
         <% end %>
       <% end %>
