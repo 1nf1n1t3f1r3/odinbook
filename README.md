@@ -85,11 +85,10 @@ The project seeds some fake accounts. They're based on The Odin Project and my D
 
 The other Sidebar is where Facebook would put its navigation stuff, but that doesn't apply here, so there's a welcoming note, instead.
 
-### To Do
+### To Do: Improved User finding
 
-As I write this, I realize that you can't Post an Image without Text. Worse, you can press the Post button without having anything written up and you get the 500 error. Impressive how I completely didn't notice that before. Oops.
-
-I might return to these things some day
+Going to the Profile Page, then seeing a User's Followers and Following, being able to click them to go to the Users/Index page displaying only the Followers/Following, filtered with SQL.
+Have the Users/Index filter by some kind of overlap based on how connected you are with the other users
 
 ## Full TOP Project Requirements:
 
