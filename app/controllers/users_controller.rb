@@ -1,8 +1,15 @@
 class UsersController < ApplicationController
-  # Users must be logged in (inherited from ApplicationController)
+# Users must be logged in (inherited from ApplicationController)
 
-  def index
-    @pagy, @users = pagy(User.order(created_at: :desc), limit: 25)
+def index
+    # 1. Capture the text parameter from your search input form
+    @search_query = params[:query]
+
+    # 2. Feed it into our relationship matrix engine
+    scope = User.suggested_for(current_user, @search_query)
+
+    # 3. Paginate the weighted collection seamlessly
+    @pagy, @users = pagy(scope, limit: 10)
 
     respond_to do |format|
       format.html
@@ -12,18 +19,18 @@ class UsersController < ApplicationController
 
 
 def show
-    @user = User.find(params[:id])
+  @user = User.find(params[:id])
 
-    # Note: Using your clean global sorting fallback since we dropped the tabs!
-    scope = @user.posts.by_hotness_for(current_user)
+  scope = @user.posts.by_hotness_for(current_user)
 
-    @pagy, @posts = pagy(scope, limit: 5)
+  @pagy, @posts = pagy(scope, limit: 5)
 
-    respond_to do |format|
-      format.html
-      format.turbo_stream # Adds support for our scroll loader
-    end
+  # Turbo
+  respond_to do |format|
+    format.html
+    format.turbo_stream
   end
+end
 
   def edit
     @user = current_user

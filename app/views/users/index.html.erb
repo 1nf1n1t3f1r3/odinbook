@@ -3,22 +3,42 @@
     <aside>
       <%= render "shared/left_sidebar" %>
     </aside>
-    <main>
-      <h1 class="text-2xl font-bold mb-6 text-primary-blue-dark">
-        All Users
-      </h1>
-      <%# Fixed Container ID & Plural variable typo %>
-      <div id="users-container" class="flex flex-col gap-2">
-        <% @users.each do |user| %>
-          <%= render user %>
+    <main class="space-y-6">
+      <div class="flex justify-between items-center">
+        <h1 class="text-2xl font-bold text-primary-blue-dark">
+          All Users
+        </h1>
+      </div>
+      <div class="card bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
+        <%= form_with url: users_path, method: :get, local: true, class: "flex gap-2" do |f| %>
+          <%= f.text_field :query, 
+                value: @search_query,
+                placeholder: "Search adventurers across the realm...", 
+                class: "input flex-1 py-2 px-3 text-sm bg-gray-50 border border-gray-200 rounded focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" %>
+          <%= f.submit "Search", class: "btn btn-primary px-4 py-2 text-sm font-semibold cursor-pointer" %>
+          <% if @search_query.present? %>
+            <%= link_to "Clear", users_path, class: "btn bg-gray-100 text-gray-600 hover:bg-gray-200 px-3 py-2 text-sm rounded flex items-center font-medium" %>
+          <% end %>
         <% end %>
       </div>
-      <%# Cleaned up structural HTML layout tags out of this block %>
+      <div id="users-container" class="flex flex-col gap-2">
+        <% if @users.any? %>
+          <% @users.each do |user| %>
+            <%= render user %>
+          <% end %>
+        <% else %>
+          <div class="text-center py-12 bg-white">
+            <span class="text-3xl"></span>
+            <p class="text-sm text-gray-500 mt-2 font-medium">No adventurers matching "<%= @search_query %>" found in this sector.</p>
+          </div>
+        <% end %>
+      </div>
       <%= turbo_frame_tag "pagy_pagination_frame" do %>
         <% if @pagy.next %>
           <div data-controller="infinite-scroll" class="my-8 text-center py-4">
+            <%# CRITICAL UPDATE: Pass the current :query into the pagination link so infinite scrolling respects the search filter! %>
             <%= link_to "Loading more users...", 
-                        users_path(page: @pagy.next), 
+                        users_path(page: @pagy.next, query: @search_query), 
                         data: { 
                           turbo_stream: true,
                           infinite_scroll_target: "link" 
