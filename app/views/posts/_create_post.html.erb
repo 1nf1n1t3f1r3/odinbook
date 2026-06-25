@@ -1,14 +1,18 @@
-<!-- Create Post -->
-<div class="mb-6">
-  <%= form_with model: Post.new, url: posts_path, class: "flex flex-col gap-3" do |f| %>
-    
+<%# app/views/posts/_create_post.html.erb %>
+<div id="create-post-form-wrapper" class="mb-6">
+  <%= form_with model: (@post || Post.new), url: posts_path, class: "flex flex-col gap-3" do |f| %>
+    <% if f.object.errors.any? %>
+      <div class=" text-red-700 p-3 rounded text-xs font-semibold">
+        <% f.object.errors.full_messages.each do |message| %>
+          <p><%= message %></p>
+        <% end %>
+      </div>
+    <% end %>
     <%= f.text_area :content,
           placeholder: "What's on your mind?",
-          class: "input" %>
-
+          class: "input #{'border-red-400 focus:ring-red-400' if f.object.errors[:content].any?}" %>
     <!-- IMAGE UPLOAD -->
     <%= f.file_field :image, class: "input" %>
-
     <%= f.submit "Post", class: "btn btn-primary self-end" %>
   <% end %>
 </div>

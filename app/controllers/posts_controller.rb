@@ -19,11 +19,25 @@ class PostsController < ApplicationController
 def create
   @post = current_user.posts.build(post_params)
 
-  if @post.save
-    redirect_to root_path, notice: "Post created!"
-  else
-    @posts = Post.includes(:user).order(created_at: :desc)
-    render :index, status: :unprocessable_entity
+  respond_to do |format|
+    if @post.save
+      format.html { redirect_to root_path, notice: "Post created!" }
+    else
+      # If validation fails, handle it asynchronously!
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          "create-post-form-wrapper",
+          partial: "posts/create_post"
+        ), status: :unprocessable_entity
+      end
+
+      # Clean fallback for basic HTML browsers
+      format.html do
+        scope = Post.includes(:user).by_hotness_for(current_user)
+        @pagy, @posts = pagy(scope, limit: 10)
+        render :index, status: :unprocessable_entity
+      end
+    end
   end
 end
 
