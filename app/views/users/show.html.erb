@@ -1,155 +1,104 @@
 <div class="container-main">
-
   <div class="layout-3col">
-
     <!-- LEFT SIDEBAR -->
     <aside>
       <div class="card">
         <h2 class="font-semibold mb-2">
-			Navigation
-		</h2>
+          Navigation
+        </h2>
         <p class="text-sm opacity-70">
-			Links coming later
-		</p>
+          Links coming later
+        </p>
       </div>
     </aside>
-
     <!-- MAIN CONTENT -->
     <main class="space-y-6">
-
       <!-- PROFILE HEADER -->
       <div class="card card-hover">
         <h1 class="text-2xl font-bold text-primary-blue-dark mb-2">
           <%= @user.username %>
         </h1>
-
-		<% if @user.avatar.attached? %>
-		<div class="mb-2">
-			<%= image_tag @user.avatar, class: "w-16 h-16 rounded-full object-cover" %>
-		</div>
-		<% end %>
-
-		<div class="mb-4"> 
-			<p>
-			<span class="font-semibold">Username:</span>
-			<%= @user.username %>
-			</p>
-
-			<p>
-			<span class="font-semibold">Email:</span>
-			<%= @user.email %>
-			</p>
-		</div>
-
-		<div class="mb-4"> 
-
-		</div>
-
-
-		<div class="mb-4 flex gap-6">
-			<p><span class="font-semibold"><%= @user.posts.count %></span> Posts</p>
-			<p><span class="font-semibold"><%= @user.followers.count %></span> Followers</p>
-			<p><span class="font-semibold"><%= @user.following.count %></span> Following</p>
-		</div>
-
-
-		<% unless current_user == @user %>
-			<% if current_user.following?(@user) %>
-				<%= button_to "Unfollow",
+        <% if @user.avatar.attached? %>
+          <div class="mb-2">
+            <%= image_tag @user.avatar, class: "w-16 h-16 rounded-full object-cover" %>
+          </div>
+        <% end %>
+        <div class="mb-4">
+          <p>
+            <span class="font-semibold">Username:</span>
+            <%= @user.username %>
+          </p>
+          <p>
+            <span class="font-semibold">Email:</span>
+            <%= @user.email %>
+          </p>
+        </div>
+        <div class="mb-4">
+        </div>
+        <div class="mb-4 flex gap-6">
+          <p><span class="font-semibold"><%= @user.posts.count %></span> Posts</p>
+          <p><span class="font-semibold"><%= @user.followers.count %></span> Followers</p>
+          <p><span class="font-semibold"><%= @user.following.count %></span> Following</p>
+        </div>
+        <% unless current_user == @user %>
+          <% if current_user.following?(@user) %>
+            <%= button_to "Unfollow",
 					user_follow_path(@user),
 					method: :delete,
 					class: "text-sm" %>
-			<% else %>
-				<%= button_to "Follow",
+          <% else %>
+            <%= button_to "Follow",
 					user_follow_path(@user),
 					method: :post,
 					class: "text-sm" %>
-			<% end %>
-		<% end %>
+          <% end %>
+        <% end %>
       </div>
-
-		<% if current_user == @user %>
-		<div class="mt-4">
-			<%= link_to "Edit Profile",
+      <% if current_user == @user %>
+        <div class="mt-4">
+          <%= link_to "Edit Profile",
 				profile_edit_path,
                 class: "btn btn-primary self-start mt-2" %>
-		</div>
-		<% end %>
-
-		<% if current_user == @user %>
-		<div class="mt-4">
-      <h2 class="text-xl font-bold text-primary-blue-dark mb-2">Create a Post</h2>
-	  <%= render "posts/create_post" %>
-		</div>
-		<% end %>
-
-
-
+        </div>
+      <% end %>
+      <% if current_user == @user %>
+        <div class="mt-4">
+          <h2 class="text-xl font-bold text-primary-blue-dark mb-2">Create a Post</h2>
+          <%= render "posts/create_post" %>
+        </div>
+      <% end %>
       <!-- POSTS HEADER -->
-        <h2 class="text-xl font-bold text-primary-blue-dark">
-          Posts
-        </h2>
-
-		<%# Sort by Recent or Top %>
-		<div class="mb-4 flex gap-2 text-sm">
-		<%= link_to "Recent",
-			user_path(@user, sort: "recent"),
-      class: "px-3 py-1 rounded-full #{params[:sort] != 'top' && params[:sort] != 'oldest' ? 'bg-blue-500 text-white' : 'bg-gray-100'}" %>
-
-		<%= link_to "Top",
-			user_path(@user, sort: "top"),
-      class: "px-3 py-1 rounded-full #{params[:sort] == 'top' ? 'bg-blue-500 text-white' : 'bg-gray-100'}" %>
-
-		<%= link_to "Oldest",
-			user_path(@user, sort: "oldest"),
-      class: "px-3 py-1 rounded-full #{params[:sort] == 'oldest' ? 'bg-blue-500 text-white' : 'bg-gray-100'}" %>
-		</div>
-
+      <h2 class="text-xl font-bold text-primary-blue-dark">
+        Posts
+      </h2>
       <!-- POSTS LIST -->
       <% if @posts.any? %>
         <div class="space-y-3">
-
           <% @posts.each do |post| %>
-			<%= render post %>
-			<% end %>
+            <%= render post %>
+          <% end %>
         </div>
-
-		<div class="pagy-nav">
-			<%== @pagy.series_nav %>
-		</div>
-
-
+        <div class="pagy-nav">
+          <%== @pagy.series_nav %>
+        </div>
       <% else %>
         <div class="card">
           <p class="opacity-70">No posts yet.</p>
         </div>
-		
-
-
       <% end %>
-
     </main>
-
     <!-- RIGHT SIDEBAR -->
-	<aside>
-	<div class="card-white">
-		<h2 class="font-semibold mb-2">
-		User Profile Card
-		</h2>
-
-		<ul>
-		<%= render "users/user",
+    <aside>
+      <div class="card-white">
+        <h2 class="font-semibold mb-2">
+          User Profile Card
+        </h2>
+        <ul>
+          <%= render "users/user",
 				user: (@user || current_user),
 				show_follow_button: false %>
-		</ul>
-	</div>
-	</aside>
-
-
-
+        </ul>
+      </div>
+    </aside>
   </div>
-
 </div>
-
-
-

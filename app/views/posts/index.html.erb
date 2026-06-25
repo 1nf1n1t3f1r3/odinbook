@@ -1,6 +1,5 @@
 <%# <h1>Posts#index</h1>
 <p>Find me in app/views/posts/index.html.erb</p> %>
-
 <div class="container-main">
   <div class="layout-3col">
     <!-- LEFT SIDEBAR -->
@@ -10,42 +9,22 @@
         <p class="text-sm opacity-70">Links coming later</p>
       </div>
     </aside>
-
-<main>
-  <!-- Create Post -->
-  <h1 class="text-2xl font-bold text-primary-blue-dark mb-2">Create a Post</h1>
-  <%= render "posts/create_post" %>
-
-  <!-- Feed -->
-  <h1 class="text-2xl font-bold text-primary-blue-dark mb-4">Feed</h1>
-
-	<%# Sort by Recent or Top %>
-<div class="mb-4 flex gap-2 text-sm">
-  <%= link_to "Recent",
-      posts_path(sort: "recent"),
-      class: "px-3 py-1 rounded-full #{params[:sort] != 'top' && params[:sort] != 'oldest' ? 'bg-blue-500 text-white' : 'bg-gray-100'}" %>
-
-  <%= link_to "Top",
-      posts_path(sort: "top"),
-      class: "px-3 py-1 rounded-full #{params[:sort] == 'top' ? 'bg-blue-500 text-white' : 'bg-gray-100'}" %>
-
-  <%= link_to "Oldest",
-      posts_path(sort: "oldest"),
-      class: "px-3 py-1 rounded-full #{params[:sort] == 'oldest' ? 'bg-blue-500 text-white' : 'bg-gray-100'}" %>
-</div>
-
-	<% @posts.each do |post| %>
-	<%= render post %>
-	<% end %>
-
-
-
-  <div class="pagy-nav">
-    <%== @pagy.series_nav %>
-  </div>
-
-</main>
-
+    <main>
+      <!-- Create Post -->
+      <h1 class="text-2xl font-bold text-primary-blue-dark mb-2">Create a Post</h1>
+      <%= render "posts/create_post" %>
+      <!-- Feed -->
+      <h1 class="text-2xl font-bold text-primary-blue-dark mb-4">Feed</h1>
+      <%# Sort by Recent or Top %>
+      <div class="mb-4 flex gap-2 text-sm">
+      </div>
+      <% @posts.each do |post| %>
+        <%= render post %>
+      <% end %>
+      <div class="pagy-nav">
+        <%== @pagy.series_nav %>
+      </div>
+    </main>
     <!-- RIGHT SIDEBAR -->
     <aside>
       <div class="card">
@@ -53,8 +32,5 @@
         <p class="text-sm opacity-70">Future: who to follow</p>
       </div>
     </aside>
-
-	  </div>
+  </div>
 </div>
-
-

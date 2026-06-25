@@ -18,10 +18,10 @@ class Post < ApplicationRecord
     # Fallback to [0] if not logged in or following no one so the SQL check doesn't crash
     following_list = user&.following_ids&.any? ? user.following_ids : [ 0 ]
 
-    # Friend multiplier: 10x boost if you follow them
+    # Friend multiplier: boost if you follow them
     multiplier_sql = "
       CASE
-        WHEN posts.user_id IN (#{following_list.join(',')}) THEN 10
+        WHEN posts.user_id IN (#{following_list.join(',')}) THEN 25
         ELSE 1.0
       end
     "
