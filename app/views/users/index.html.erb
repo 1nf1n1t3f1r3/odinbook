@@ -10,46 +10,63 @@
         </h1>
       </div>
       <div class="card bg-white border border-gray-200 rounded-lg p-4 shadow-sm">
-        <%= form_with url: users_path, method: :get, local: true, class: "flex gap-2" do |f| %>
+        <%# Turbo %>
+        <%= form_with url: users_path, 
+              method: :get, 
+              class: "flex gap-2", 
+              data: { 
+                turbo_frame: "users_search_results_frame",
+                turbo_action: "advance" 
+              } do |f| %>          <%# Keep original parameter tracking fields if arriving from a profile filter %>
+          <%= hidden_field_tag :filter_by, params[:filter_by] if params[:filter_by].present? %>
+          <%= hidden_field_tag :user_id, params[:user_id] if params[:user_id].present? %>
           <%= f.text_field :query, 
                 value: @search_query,
                 placeholder: "Search adventurers across the realm...", 
                 class: "input flex-1 py-2 px-3 text-sm bg-gray-50 border border-gray-200 rounded focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500" %>
           <%= f.submit "Search", class: "btn btn-primary px-4 py-2 text-sm font-semibold cursor-pointer" %>
-          <% if @search_query.present? %>
-            <%= link_to "Clear", users_path, class: "btn bg-gray-100 text-gray-600 hover:bg-gray-200 px-3 py-2 text-sm rounded flex items-center font-medium" %>
+          <% if @search_query.present? || params[:filter_by].present? %>
+            <%# Clear link also targets the frame to cleanly sweep away filter contexts %>
+            <%= link_to "Clear", users_path, data: { turbo_frame: "users_search_results_frame" }, class: "btn bg-gray-100 text-gray-600 hover:bg-gray-200 px-3 py-2 text-sm rounded flex items-center font-medium" %>
           <% end %>
         <% end %>
       </div>
-      <div id="users-container" class="flex flex-col gap-2">
-        <% if @users.any? %>
-          <% @users.each do |user| %>
-            <%= render user %>
+      <%# 
+        THE MASTER TURBO FRAME:
+        This frames your dynamic search area. Every form submission, clear click, and 
+        infinite scroll page action will now happen exclusively inside this invisible box!
+      %>
+      <%= turbo_frame_tag "users_search_results_frame" do %>
+        <div id="users-container" class="flex flex-col gap-2">
+          <% if @users.any? %>
+            <% @users.each do |user| %>
+              <%= render user %>
+            <% end %>
+          <% else %>
+            <div class="text-center py-12 bg-white rounded-lg border border-gray-100">
+              <span class="text-3xl">🕵️‍♂️</span>
+              <p class="text-sm text-gray-500 mt-2 font-medium">No adventurers matching "<%= @search_query %>" found in this sector.</p>
+            </div>
           <% end %>
-        <% else %>
-          <div class="text-center py-12 bg-white">
-            <span class="text-3xl"></span>
-            <p class="text-sm text-gray-500 mt-2 font-medium">No adventurers matching "<%= @search_query %>" found in this sector.</p>
-          </div>
-        <% end %>
-      </div>
-      <%# TURBO %>
-      <%= turbo_frame_tag "pagy_pagination_frame" do %>
-        <% if @pagy.next %>
-          <div data-controller="infinite-scroll" class="my-8 text-center py-4">
-            <%= link_to "Loading more users...", 
-                  users_path(
-                    page: @pagy.next, 
-                    query: @search_query, 
-                    filter_by: params[:filter_by], 
-                    user_id: params[:user_id]
-                  ), 
-                  data: { 
-                    turbo_stream: true,
-                    infinite_scroll_target: "link" 
-                  }, 
-                  class: "text-gray-500 text-sm tracking-wide animate-pulse" %>
-          </div>
+        </div>
+        <%# Nested pagination loop frame remains fully operational %>
+        <%= turbo_frame_tag "pagy_pagination_frame" do %>
+          <% if @pagy.next %>
+            <div data-controller="infinite-scroll" class="my-8 text-center py-4">
+              <%= link_to "Loading more users...", 
+                    users_path(
+                      page: @pagy.next, 
+                      query: @search_query, 
+                      filter_by: params[:filter_by], 
+                      user_id: params[:user_id]
+                    ), 
+                    data: { 
+                      turbo_stream: true,
+                      infinite_scroll_target: "link" 
+                    }, 
+                    class: "text-gray-500 text-sm tracking-wide animate-pulse" %>
+            </div>
+          <% end %>
         <% end %>
       <% end %>
     </main>

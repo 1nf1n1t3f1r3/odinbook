@@ -31,7 +31,11 @@ def index
   @pagy, @users = pagy(scope, limit: 25)
 
   respond_to do |format|
-    format.html
+    format.html {
+    if turbo_frame_request?
+      response.set_header("Turbo-Frame", "users_search_results_frame")
+    end
+  }
     format.turbo_stream
   end
 end
