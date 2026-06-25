@@ -32,10 +32,11 @@
           <p><span class="font-semibold"><%= @user.posts.count %></span> Posts</p>
           <div class="mb-4 flex gap-6">
             <p><span class="font-semibold"><%= @user.posts.count %></span> Posts</p>
-            <%# Clickable Links for Followers / Following; goes to User/Index with their names Searched %>
             <p class="hover:underline cursor-pointer">
               <%= link_to users_path(filter_by: "followers", user_id: @user.id, query: "#{@user.username}'s Followers") do %>
-                <span class="font-semibold text-primary-blue-dark"><%= @user.followers.count %></span> Followers
+                <span id="followers_count_user_<%= @user.id %>" class="font-semibold text-primary-blue-dark">
+                  <%= @user.followers.count %>
+                </span> Followers
               <% end %>
             </p>
             <p class="hover:underline cursor-pointer">
@@ -46,17 +47,9 @@
           </div>
         </div>
         <% unless current_user == @user %>
-          <% if current_user.following?(@user) %>
-            <%= button_to "Unfollow",
-					user_follow_path(@user),
-					method: :delete,
-					class: "text-sm" %>
-          <% else %>
-            <%= button_to "Follow",
-					user_follow_path(@user),
-					method: :post,
-					class: "text-sm" %>
-          <% end %>
+          <div class="mt-2">
+            <%= render "follows/follow_button", user: @user %>
+          </div>
         <% end %>
       </div>
       <% if current_user == @user %>

@@ -85,10 +85,9 @@ The project seeds some fake accounts. They're based on The Odin Project and my D
 
 The other Sidebar is where Facebook would put its navigation stuff, but that doesn't apply here, so there's a welcoming note, instead.
 
-### To Do: Improved User finding
+### To Do: Moar Stuff?
 
-Going to the Profile Page, then seeing a User's Followers and Following, being able to click them to go to the Users/Index page displaying only the Followers/Following, filtered with SQL.
-Have the Users/Index filter by some kind of overlap based on how connected you are with the other users
+Obviously the site's pretty bare-bones compared to Facebook, and the CSS is a bit shabby. Adding the new sidebars has put a bit too much of that blue everywhere. Still, I think that what's there is in a pretty good spot now. Let me know if there's any bugs or if I've missed anything!
 
 ## Full TOP Project Requirements:
 

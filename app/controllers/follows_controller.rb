@@ -4,12 +4,31 @@ class FollowsController < ApplicationController
 
   def create
     current_user.following_relationships.create!(followed: @user)
-    redirect_back fallback_location: root_path
+
+    respond_to do |format|
+      # If it's a Turbo Frame request, just re-render the button fragment!
+      format.html {
+        if turbo_frame_request?
+          render partial: "follows/follow_button", locals: { user: @user }
+        else
+          redirect_back fallback_location: root_path
+        end
+      }
+    end
   end
 
   def destroy
     current_user.following_relationships.find_by(followed: @user)&.destroy
-    redirect_back fallback_location: root_path
+
+    respond_to do |format|
+      format.html {
+        if turbo_frame_request?
+          render partial: "follows/follow_button", locals: { user: @user }
+        else
+          redirect_back fallback_location: root_path
+        end
+      }
+    end
   end
 
   private

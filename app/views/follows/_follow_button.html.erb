@@ -1,16 +1,22 @@
+<%# app/views/users/_follow_button.html.erb %>
 <% disabled = local_assigns.fetch(:disabled, false) %>
-
-<% if current_user.following?(user) %>
-  <%= button_to "Unfollow",
-    user_follow_path(user),
-    method: :delete,
-    class: "btn btn-secondary text-sm",
-    disabled: disabled %>
-<% else %>
-  <%= button_to "Follow",
-    user_follow_path(user),
-    method: :post,
-    class: "btn btn-primary text-sm",
-    disabled: disabled %>
+<%# 
+  CRITICAL: Using dom_id(user, :follow_button) generates a completely unique string 
+  like "follow_button_user_42". This ensures that if you have multiple users listed 
+  on a search grid, clicking one doesn't accidentally replace the button for someone else!
+%>
+<%= turbo_frame_tag dom_id(user, :follow_button) do %>
+  <% if current_user.following?(user) %>
+    <%= button_to "Unfollow",
+      user_follow_path(user),
+      method: :delete,
+      class: "btn btn-secondary text-sm",
+      disabled: disabled %>
+  <% else %>
+    <%= button_to "Follow",
+      user_follow_path(user),
+      method: :post,
+      class: "btn btn-primary text-sm",
+      disabled: disabled %>
+  <% end %>
 <% end %>
-
