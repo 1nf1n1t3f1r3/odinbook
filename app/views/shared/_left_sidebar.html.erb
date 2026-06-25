@@ -1,0 +1,60 @@
+<!-- LEFT SIDEBAR -->
+<div class="w-[320px] mx-auto flex flex-col gap-4 shrink-0">
+  <!-- CARD 1: USER PROFILE OVERVIEW -->
+  <div class="card bg-white border border-gray-100 rounded-lg p-4 shadow-sm text-center">
+    <% if current_user.avatar.attached? %>
+      <%= image_tag current_user.avatar, class: "w-16 h-16 rounded-full mx-auto object-cover mb-3 border border-gray-200" %>
+    <% else %>
+      <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full mx-auto mb-3 flex items-center justify-center text-white font-bold text-xl uppercase">
+        <%= current_user.username.first %>
+      </div>
+    <% end %>
+    <h3 class="font-bold text-gray-800 text-base">
+      <%= current_user.username %>
+    </h3>
+    <p class="text-xs text-gray-400 mt-0.5">
+      Logged in as Adventurer
+    </p>
+    <hr class="my-3 border-gray-100">
+    <div class="text-left space-y-2 text-xs text-gray-600">
+      <div class="flex justify-between">
+        <span class="opacity-70">Your Posts:</span>
+        <span class="font-semibold text-gray-800"><%= current_user.posts.count %></span>
+      </div>
+    </div>
+  </div>
+  <!-- CARD 2: REALM ONBOARDING GUIDE -->
+  <div class="card bg-gradient-to-b from-slate-50 to-slate-100 border border-slate-200 rounded-lg p-5 shadow-sm space-y-4">
+    <div class="flex items-center gap-2 text-primary-blue-dark">
+      <span class="text-xl">🗺️</span>
+      <h3 class="font-bold text-base tracking-tight">
+        Adventure Log
+      </h3>
+    </div>
+    <div class="space-y-3 text-xs text-slate-700 leading-relaxed">
+      <p>
+        <strong>Welcome to Odinbook,</strong> a custom Facebook Clone for the full-stack developer trail, overseen by Odin himself. 
+      </p>
+      <p>
+        It's recently been widely adopted by the citizens of Leilon, a Dungeons & Dragons fantasy city. Don't mind if things get a little weird!
+      </p>
+      <p class="pt-2 opacity-80 border-t border-slate-200 text-[11px] italic">
+        Brought to you by the strict teachings of 
+        <a href="https://www.theodinproject.com" 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           class="text-blue-600 font-bold hover:underline">
+          The Odin Project
+        </a>. Keep your blade sharp and your SQL queries indexed.
+      </p>
+      <p class="pt-1">
+        <a href="https://github.com/1nf1n1t3f1r3/odinbook" 
+           target="_blank" 
+           rel="noopener noreferrer"
+           class="text-blue-600 hover:underline">
+          <strong>Visit the Github Repo!</strong>
+        </a>
+      </p>
+    </div>
+  </div>
+</div>

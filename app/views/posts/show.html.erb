@@ -1,55 +1,42 @@
 <div class="container-main">
   <div class="layout-3col">
-
     <!-- LEFT SIDEBAR -->
     <aside>
-      <div class="card">
-        <h2 class="font-semibold mb-2">Navigation</h2>
-        <p class="text-sm opacity-70">Links coming later</p>
-      </div>
+      <%= render "shared/left_sidebar" %>
     </aside>
-
     <!-- MAIN CONTENT -->
     <main class="space-y-6">
-
       <!-- POST TITLE -->
       <h1 class="text-2xl font-bold text-primary-blue-dark mb-2">
         Post
       </h1>
-
       <!-- POST CARD -->
       <div class="card card-hover">
         <div class="flex items-center gap-3 mb-4">
-			<%# Avatar %>
-			<% if @post.user.avatar.attached? %>
-			<%= image_tag @post.user.avatar,
+          <%# Avatar %>
+          <% if @post.user.avatar.attached? %>
+            <%= image_tag @post.user.avatar,
 				class: "w-12 h-12 rounded-full object-cover" %>
-			<% end %>
-
-            <strong>
-				<%= link_to @post.user.username,
+          <% end %>
+          <strong>
+            <%= link_to @post.user.username,
 							user_path(@post.user),
 							class: "text-primary-blue-dark hover:text-accent-yellow font-semibold" %>
-            </strong>
+          </strong>
         </div>
-
         <p class="mb-4 text-base">
           <%= @post.content %>
         </p>
-
-		<%# Image %>
-		<% if @post.image.attached? %>
- 			<%= image_tag @post.image, class: "rounded-lg mt-2 max-h-192 object-cover mb-4" %>
-		<% end %>
-
+        <%# Image %>
+        <% if @post.image.attached? %>
+          <%= image_tag @post.image, class: "rounded-lg mt-2 max-h-192 object-cover mb-4" %>
+        <% end %>
         <small class="block opacity-60 mb-4">
           Posted <%= time_ago_in_words(@post.created_at) %> ago
         </small>
-
         <!-- ACTIONS -->
         <div class="flex gap-2">
-		<%= render "likes/like_button", post: @post %>
-
+          <%= render "likes/like_button", post: @post %>
           <% if @post.user == current_user %>
             <%= button_to "Delete Post",
                           post_path(@post),
@@ -58,50 +45,38 @@
           <% end %>
         </div>
       </div>
-
-	<%# COMMENTS %>
-	<h1 class="text-2xl font-bold text-primary-blue-dark mb-2">
-		Comments
-	</h1>
-	<%= render "comments/create_comment_inline", post: @post %>
-
-	<!-- COMMENTS TITLE -->
-
-
-	<!-- COMMENTS LIST -->
-	<% @post.comments.each do |comment| %>
-	<div class="card card-hover mb-4">
-
-		<!-- Username -->
-	<div class="mb-4 font-semibold">
-	<%= link_to comment.user.username,
+      <%# COMMENTS %>
+      <h1 class="text-2xl font-bold text-primary-blue-dark mb-2">
+        Comments
+      </h1>
+      <%= render "comments/create_comment_inline", post: @post %>
+      <!-- COMMENTS TITLE -->
+      <!-- COMMENTS LIST -->
+      <% @post.comments.each do |comment| %>
+        <div class="card card-hover mb-4">
+          <!-- Username -->
+          <div class="mb-4 font-semibold">
+            <%= link_to comment.user.username,
 				user_path(comment.user),
 				class: "text-primary-blue-dark hover:text-accent-yellow" %>
-	</div>
-
-		<!-- Content + delete -->
-	<div class="flex flex-col gap-2">
-		<div class="flex-1 text-left min-w-0">
-			<%= simple_format(comment.content) %>
-		</div>
-
-		<div class="flex gap-3 mt-3 text-sm opacity-70">
-
-		<% if comment.user == current_user %>
-		<%= button_to "Delete",
+          </div>
+          <!-- Content + delete -->
+          <div class="flex flex-col gap-2">
+            <div class="flex-1 text-left min-w-0">
+              <%= simple_format(comment.content) %>
+            </div>
+            <div class="flex gap-3 mt-3 text-sm opacity-70">
+              <% if comment.user == current_user %>
+                <%= button_to "Delete",
 						post_comment_path(@post, comment),
 						method: :delete,
 						class: "btn btn-danger" %>
-		<% end %>
-		</div>
-
-
-		</div>
-
-	</div>
-	<% end %>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      <% end %>
     </main>
-
     <!-- RIGHT SIDEBAR -->
     <aside>
       <div class="card">
@@ -111,6 +86,5 @@
         </p>
       </div>
     </aside>
-
   </div>
 </div>

@@ -2,13 +2,11 @@
 
 Github Page for The Odin Project (TOP) Odinbook.
 The Website can be found at this URL:
-https://mysite-xb3v.onrender.com/
-
-If it doesn't work and you want to see it, let me know. The welcoming E-Mail may have broken after 15/06/2026, due to working with a Sendgrid Trial, at the moment.
+https://odinbook.janusdevries.nl/
 
 ## Summary
 
-The project is a pretty generic social media clone. Users can sign up with an Email + Username through Devise. User will receive a welcome mail. Users can write Posts, which accept Text and Images, can Comment on Posts, Like Posts and follow other Users. Users can also set a Profile Picture
+The project is a Facebook clone. Users can sign up with an Email + Username through Devise. Users can write Posts, which accept Text and Images, can Comment on Posts, Like Posts and follow other Users. Users can also set a Profile Picture
 
 ## TOP Info
 
@@ -75,13 +73,21 @@ Adding Cloudinary to actually store data. Just add it to the Gemfile and done.
 
 I thought it'd be cute to have some social media mimicking relevancy score. So, the Posts display checks for recency, and counts likes and comments in order to decide how 'hot' a Post is. Hottest posts go to the top, unless you're sorting by how Recent/Old something is. If there were ever 1000 posts on Odinbook, that'd 'organize' them a little. That being said, 1000 posts wouldn't fit on the page, so I added the Pagy gem. It limits the amount of displays in Posts/Index and Users/index, with paging buttons.
 
+The Odin Project says to only show Posts from people you're following... That's kind of stupid because new users will only ever see a blank page. Instead, the system heavily favors followed persons, but displays other's posts as well.
+
+### Turbo
+
+I've also added Turbo. With Render + Neon, the site runs painfully slow. With Turbo, it handles Liking Posts, and uses an infinite scroll method, rather than 'actual' paging.
+
+### Population & Sidebars
+
+The project seeds some fake accounts. They're based on The Odin Project and my D&D Campaign. I've also added a sidebar for 'Advertisements'. Just for fun. Can somebody please return Garritt's Goat?
+
+The other Sidebar is where Facebook would put its navigation stuff, but that doesn't apply here, so there's a welcoming note, instead.
+
 ### To Do
 
 As I write this, I realize that you can't Post an Image without Text. Worse, you can press the Post button without having anything written up and you get the 500 error. Impressive how I completely didn't notice that before. Oops.
-
-I also still want to do something with the Sidebars that are just placeholders now. I think Facebook just dumps ads there. I don't have quite as much content to pin. Follow suggestions based on mutual friends would be a good contender. There'd probably be a way also to connect comments and likes on posts to the user to determine overlap. That's where backend might start to get a little complicated.
-
-Finally... I kind of want to Turbo it up. The site is slow as a snail, especially with the Render + Neon combo.
 
 I might return to these things some day
 
